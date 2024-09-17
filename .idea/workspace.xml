@@ -4,20 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/carregador.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/modelo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/pessoa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/pipeline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/model/preprocessador.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/schemas/error_schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/schemas/pessoa_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms.">
+      <change afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/model/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/model/patient.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/model/preprocessor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/model/valuator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MVP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/MVP.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/MVP.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/carregador.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/modelo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/pessoa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/model/preprocessador.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/schemas/pessoa_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/schemas/patient_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heart-disease.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/heart-disease.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +36,17 @@
         <option value="Jupyter Notebook" />
         <option value="Python Script" />
       </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
     </option>
   </component>
   <component name="Git.Settings">
@@ -59,22 +76,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.app.executor": "Run",
+    "Python.patient.executor": "Run",
+    "Python.patient_schema.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jbrun\PycharmProjects\mvp-sistemas-inteligentes\api" />
+      <recent name="C:\Users\jbrun\PycharmProjects\mvp-sistemas-inteligentes\data" />
+      <recent name="C:\Users\jbrun\PycharmProjects\mvp-sistemas-inteligentes\notebook" />
       <recent name="C:\Users\jbrun\PycharmProjects\mvp-sistemas-inteligentes" />
     </key>
   </component>
@@ -99,10 +123,41 @@
       <workItem from="1725844821721" duration="1100000" />
       <workItem from="1726270075573" duration="7000" />
       <workItem from="1726447936505" duration="1926000" />
+      <workItem from="1726450720659" duration="547000" />
+      <workItem from="1726528349896" duration="6206000" />
     </task>
+    <task id="LOCAL-00001" summary="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms.">
+      <option name="closed" value="true" />
+      <created>1726451260257</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726451260257</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/api/app.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mvp_sistemas_inteligentes$patient_schema.coverage" NAME="patient_schema Coverage Results" MODIFIED="1726532831952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api/schemas" />
+    <SUITE FILE_PATH="coverage/mvp_sistemas_inteligentes$patient.coverage" NAME="patient Coverage Results" MODIFIED="1726534948845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api/model" />
+    <SUITE FILE_PATH="coverage/mvp_sistemas_inteligentes$app.coverage" NAME="app Coverage Results" MODIFIED="1726535046596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
   </component>
 </project>

@@ -4,10 +4,10 @@ import pickle
 
 class Pipeline:
 
-    def carrega_pipeline(path):
-        """Carregamos o pipeline construindo durante a fase de treinamento
+    def load(path):
         """
-
+        load pipeline
+        """
         with open(path, 'rb') as file:
             pipeline = pickle.load(file)
         return pipeline

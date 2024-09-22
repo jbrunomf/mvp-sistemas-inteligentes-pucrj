@@ -1,5 +1,7 @@
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
+
+from api.model import Session
 from api.model.model import Model
 from api.model.patient import Patient
 from api.model.pipeline import Pipeline
@@ -98,7 +100,7 @@ def predict(form: PatientSchema):
     # Preparando os dados para o modelo
     X_input = PreProcessor.prepare_from_form(form)
     # Carregando modelo
-    model_path = './MachineLearning/pipelines/rf_diabetes_pipeline.pkl'
+    model_path = '../MachineLearning/pipelines/pipeline.pkl'
     # modelo = Model.carrega_modelo(ml_path)
     modelo = Pipeline.load(model_path)
     # Realizando a predição

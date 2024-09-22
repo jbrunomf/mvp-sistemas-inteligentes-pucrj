@@ -6,7 +6,7 @@ class Pipeline:
 
     def load(path):
         """
-        load pipeline
+        load pipelines
         """
         with open(path, 'rb') as file:
             pipeline = pickle.load(file)

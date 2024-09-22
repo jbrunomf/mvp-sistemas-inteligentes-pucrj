@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="Rename and refactor `api/app.py`&#10;&#10;Relocated `api/app.py` to `app.py` and updated module imports accordingly. Modified endpoint route from `/patient` to `/patients` and adjusted model path within the application. Added debug print statement for patient data on error.">
-      <change afterPath="$PROJECT_DIR$/.flaskenv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="Refactor and relocate `app.py`&#10;&#10;Renamed `app.py` to `api/app.py` and adjusted import statements accordingly. Updated endpoint routes and added additional debug print statements for better error handling. Changes include modifications to `.idea/workspace.xml`, `dataSources.xml`, and `patient_schema.py`.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/schemas/patient_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/schemas/patient_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebook/MVP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/MVP.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +158,7 @@
       <workItem from="1726969973983" duration="1462000" />
       <workItem from="1727028758201" duration="25000" />
       <workItem from="1727028834390" duration="7703000" />
-      <workItem from="1727039329784" duration="3012000" />
+      <workItem from="1727039329784" duration="3505000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms.">
       <option name="closed" value="true" />
@@ -204,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727035227280</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Refactor and relocate `app.py`&#10;&#10;Renamed `app.py` to `api/app.py` and adjusted import statements accordingly. Updated endpoint routes and added additional debug print statements for better error handling. Changes include modifications to `.idea/workspace.xml`, `dataSources.xml`, and `patient_schema.py`.">
+      <option name="closed" value="true" />
+      <created>1727044115078</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727044115078</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,7 +220,8 @@
     <MESSAGE value="Add machine learning pipeline and test data files&#10;&#10;Added .pkl files for the model, pipelines, and scaler. Included new test datasets for heart disease prediction. Updated the notebook with path adjustments and optimized hyperparameters for KNN." />
     <MESSAGE value="Add MVP notebook for heart disease classification&#10;&#10;This commit introduces a new Jupyter notebook for the MVP project located in the `.ipynb_checkpoints` directory. The notebook includes data loading, preprocessing steps, model training, and validation for heart disease classification using various machine learning models." />
     <MESSAGE value="Rename and refactor `api/app.py`&#10;&#10;Relocated `api/app.py` to `app.py` and updated module imports accordingly. Modified endpoint route from `/patient` to `/patients` and adjusted model path within the application. Added debug print statement for patient data on error." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename and refactor `api/app.py`&#10;&#10;Relocated `api/app.py` to `app.py` and updated module imports accordingly. Modified endpoint route from `/patient` to `/patients` and adjusted model path within the application. Added debug print statement for patient data on error." />
+    <MESSAGE value="Refactor and relocate `app.py`&#10;&#10;Renamed `app.py` to `api/app.py` and adjusted import statements accordingly. Updated endpoint routes and added additional debug print statements for better error handling. Changes include modifications to `.idea/workspace.xml`, `dataSources.xml`, and `patient_schema.py`." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor and relocate `app.py`&#10;&#10;Renamed `app.py` to `api/app.py` and adjusted import statements accordingly. Updated endpoint routes and added additional debug print statements for better error handling. Changes include modifications to `.idea/workspace.xml`, `dataSources.xml`, and `patient_schema.py`." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -76,6 +76,10 @@ def predict(form: PatientSchema):
         thalach: Maximum heart rate achieved
         exang: Exercise-induced angina (1 = yes; 0 = no)
         oldpeak: ST depression induced by exercise relative to rest
+        slope:
+        ca:
+        thal:
+        outcome: target to predict
 
     Returns:
         dict: patient

@@ -1,7 +1,6 @@
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
 
-from api.model import Session
 from api.model.model import Model
 from api.model.patient import Patient
 from api.model.pipeline import Pipeline
@@ -76,9 +75,9 @@ def predict(form: PatientSchema):
         thalach: Maximum heart rate achieved
         exang: Exercise-induced angina (1 = yes; 0 = no)
         oldpeak: ST depression induced by exercise relative to rest
-        slope: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]
-        ca:
-        thal:
+        slope: Patient's Slope Levels++]
+        ca: Patient's CA Levels
+        thal: Patient's THAL Levels
         outcome: target to predict
 
     Returns:
@@ -143,9 +142,8 @@ def predict(form: PatientSchema):
 
     # Caso ocorra algum erro na adição
     except Exception as e:
-        error_msg = "Não foi possível salvar novo item :/"
-        print(patient.__dict__)
-        logger.warning(f"Erro ao adicionar paciente '{patient}', {error_msg}")
+        error_msg = "Não foi possível salvar o paciente"
+        logger.warning(f"Erro ao adicionar paciente '{patient}', {e}")
         return {"message": error_msg}, 400
 
 

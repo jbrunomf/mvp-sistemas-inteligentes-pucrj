@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -21,7 +21,6 @@ class PatientSchema(BaseModel):
     thal: int = 3
     slope: int = 1
     ca: int = 0
-    outcome: int = 0
 
 class PatientViewSchema(BaseModel):
     """Define como um paciente será retornado"""

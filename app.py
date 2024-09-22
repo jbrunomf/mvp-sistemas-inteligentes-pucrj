@@ -9,8 +9,8 @@ from api.model.preprocessor import PreProcessor
 from api.schemas.error_schema import ErrorSchema
 from api.schemas.patient_schema import PatientSchema, show_patient, show_all_patients, PatientViewSchema, \
     PatientSearchSchema
-from model import *
-from logger import logger
+from api.model import *
+from api.logger import logger
 
 from flask_cors import CORS
 
@@ -59,7 +59,7 @@ def get_pacientes():
 
 
 # Rota de adição de paciente
-@app.post('/patient', tags=[paciente_tag],
+@app.post('/patients', tags=[paciente_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
     """Adiciona um novo paciente à base de dados
@@ -76,7 +76,7 @@ def predict(form: PatientSchema):
         thalach: Maximum heart rate achieved
         exang: Exercise-induced angina (1 = yes; 0 = no)
         oldpeak: ST depression induced by exercise relative to rest
-        slope:
+        slope: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]
         ca:
         thal:
         outcome: target to predict
@@ -104,7 +104,7 @@ def predict(form: PatientSchema):
     # Preparando os dados para o modelo
     X_input = PreProcessor.prepare_from_form(form)
     # Carregando modelo
-    model_path = '../MachineLearning/pipelines/pipeline.pkl'
+    model_path = 'MachineLearning/pipelines/pipeline.pkl'
     # modelo = Model.carrega_modelo(ml_path)
     modelo = Pipeline.load(model_path)
     # Realizando a predição
@@ -144,6 +144,7 @@ def predict(form: PatientSchema):
     # Caso ocorra algum erro na adição
     except Exception as e:
         error_msg = "Não foi possível salvar novo item :/"
+        print(patient.__dict__)
         logger.warning(f"Erro ao adicionar paciente '{patient}', {error_msg}")
         return {"message": error_msg}, 400
 

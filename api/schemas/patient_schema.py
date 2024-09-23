@@ -22,6 +22,7 @@ class PatientSchema(BaseModel):
     slope: int = 1
     ca: int = 0
 
+
 class PatientViewSchema(BaseModel):
     """Define como um paciente será retornado"""
     age: int = 20
@@ -45,7 +46,7 @@ class PatientSearchSchema(BaseModel):
     id: int = 0
 
 
-class ListaPacientesSchema(BaseModel):
+class ListPacientesSchema(BaseModel):
     """Define a list of patient"""
     patients: List[PatientSchema]
 
@@ -101,4 +102,4 @@ def show_all_patients(patients: List[Patient]):
             "outcome": patient.outcome
         })
 
-    return {"pacientes": result}
+    return result

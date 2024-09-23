@@ -7,7 +7,7 @@ from api.model.pipeline import Pipeline
 from api.model.preprocessor import PreProcessor
 from api.schemas.error_schema import ErrorSchema
 from api.schemas.patient_schema import PatientSchema, show_patient, show_all_patients, PatientViewSchema, \
-    PatientSearchSchema
+    PatientSearchSchema, ListPacientesSchema
 from api.model import *
 from api.logger import logger
 
@@ -19,50 +19,49 @@ app = OpenAPI(__name__, info=info)
 CORS(app)
 
 # Definindo tags para agrupamento das rotas
-home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
-paciente_tag = Tag(name="Paciente", description="Adição, visualização, remoção e predição de pacientes com Diabetes")
+home_tag = Tag(name="Doc", description="Swagger, Redoc or RapiDoc")
+patient_tag = Tag(name="Patient", description="Create, Read Data from patients")
 
 
 # Rota home
 @app.get('/', tags=[home_tag])
 def home():
-    """Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
+    """Redirects to /openapi, a screen that allows choosing the style of documentation.
     """
     return redirect('/openapi')
 
 
 # Rota de listagem de pacientes
-@app.get('/patient', tags=[paciente_tag],
-         responses={"200": PatientSchema, "404": ErrorSchema})
-def get_pacientes():
-    """Lista todos os pacientes cadastrados na base
+@app.get('/patient', tags=[patient_tag],
+         responses={"200": ListPacientesSchema, "404": ErrorSchema})
+def get_all():
+    """Lists all patients registered in the database
     Args:
        none
 
     Returns:
-        list: lista de pacientes cadastrados na base
+        list: list of patients registered in the database
     """
-    logger.debug("Coletando dados sobre todos os pacientes")
-    # Criando conexão com a base
+    logger.debug("Collecting data on all patients")
+    # Creating connection to the database
     session = Session()
-    # Buscando todos os pacientes
+    # Fetching all patients
     pacientes = session.query(Patient).all()
 
     if not pacientes:
-        # Se não houver pacientes
-        return {"pacientes": []}, 200
+        # If there are no patients
+        return {"patients": []}, 200
     else:
-        logger.debug(f"%d pacientes econtrados" % len(pacientes))
-        print(pacientes)
+        logger.debug(f"%d patient(s) found" % len(pacientes))
         return show_all_patients(pacientes), 200
 
 
-# Rota de adição de paciente
-@app.post('/patients', tags=[paciente_tag],
+# add new patient route
+@app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
-    """Adiciona um novo paciente à base de dados
-    Retorna uma representação dos pacientes e diagnósticos associados.
+    """Adds a new patient to the database
+    Returns a representation of patients and associated diagnoses.
 
     Args:
         age: Age of the patient (in years)
@@ -125,58 +124,58 @@ def predict(form: PatientSchema):
         outcome=outcome,
         thal=thal
     )
-    logger.debug(f"Adicionando paciente: '{patient}'")
+    logger.debug(f"Adding patient: '{patient}'")
 
     try:
-        # Criando conexão com a base
+        # Creating connection to the database
         session = Session()
 
-        # Checando se paciente já existe na base
-        # Adicionando paciente
+        # Checking if patient already exists in the database
+        # Adding patient
         session.add(patient)
-        # Efetivando o comando de adição
+        # Committing the addition command
         session.commit()
-        # Concluindo a transação
-        # logger.debug(f"Adicionado paciente de nome: '{paciente.name}'")
+        # Concluding the transaction
+        # logger.debug(f"Added patient with name: '{paciente.name}'")
         return show_patient(patient), 200
 
-    # Caso ocorra algum erro na adição
+    # In case of any error during addition
     except Exception as e:
-        error_msg = "Não foi possível salvar o paciente"
-        logger.warning(f"Erro ao adicionar paciente '{patient}', {e}")
+        error_msg = "Could not save the patient"
+        logger.warning(f"Error adding patient '{patient}', {e}")
         return {"message": error_msg}, 400
 
 
 # Métodos baseados em nome
 # Rota de busca de paciente por nome
-@app.get('/patient', tags=[paciente_tag],
-         responses={"200": PatientViewSchema, "404": ErrorSchema})
-def get_patient(query: PatientSearchSchema):
-    """get pacient by id from database
-
-    Args:
-        patient id (int)
-
-    Returns:
-        dict: patient instance
-    """
-
-    logger.debug(f"loadint patient.. wait a moment #{query.id}")
-    session = Session()
-    patient = session.query(Patient).filter(Patient.id == query.id).first()
-
-    if not patient:
-        error_msg = f"Patient {patient.id} not found. Try again."
-        logger.warning(f"{error_msg}")
-        return {"mesage": error_msg}, 404
-    else:
-        logger.debug(f"Patient found!: '{patient.id}'")
-        # retorna a representação do paciente
-        return show_patient(patient), 200
+# @app.get('/patient', tags=[patient_tag],
+#          responses={"200": PatientViewSchema, "404": ErrorSchema})
+# def get_patient(query: PatientSearchSchema):
+#     """get patient by id from database
+#
+#     Args:
+#         patient id (int)
+#
+#     Returns:
+#         dict: patient instance
+#     """
+#
+#     logger.debug(f"loading patient.. wait a moment #{query.id}")
+#     session = Session()
+#     patient = session.query(Patient).filter(Patient.id == query.id).first()
+#
+#     if not patient:
+#         error_msg = f"Patient {patient.id} not found. Try again."
+#         logger.warning(f"{error_msg}")
+#         return {"mesage": error_msg}, 404
+#     else:
+#         logger.debug(f"Patient found!: '{patient.id}'")
+#         # returns the representation of the patient
+#         return show_patient(patient), 200
 
 
 # Rota de remoção de paciente por nome
-@app.delete('/patient', tags=[paciente_tag],
+@app.delete('/patient', tags=[patient_tag],
             responses={"200": PatientViewSchema, "404": ErrorSchema})
 def delete_patient(query: PatientSearchSchema):
     """ Delete patient by id
@@ -188,23 +187,23 @@ def delete_patient(query: PatientSearchSchema):
     """
 
     patient_id = query.id
-    logger.debug(f"Deletando dados sobre paciente #{patient_id}")
+    logger.debug(f"Deleting data on patient #{patient_id}")
 
-    # Criando conexão com a base
+    # Creating connection to the database
     session = Session()
 
-    # Buscando paciente
+    # Fetching patient
     patient = session.query(Patient).filter(Patient.id == patient_id).first()
 
     if not patient:
-        error_msg = "Paciente não encontrado na base :/"
-        logger.warning(f"Erro ao deletar paciente '{patient_id}', {error_msg}")
+        error_msg = "Patient not found in the database :/"
+        logger.warning(f"Error deleting patient '{patient_id}', {error_msg}")
         return {"message": error_msg}, 404
     else:
         session.delete(patient)
         session.commit()
-        logger.debug(f"Deletado paciente #{patient_id}")
-        return {"message": f"Paciente {patient_id} removido com sucesso!"}, 200
+        logger.debug(f"Deleted patient #{patient_id}")
+        return {"message": f"Patient {patient_id} successfully removed!"}, 200
 
 
 if __name__ == '__main__':

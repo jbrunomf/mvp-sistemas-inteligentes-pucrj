@@ -6,8 +6,7 @@ from api.model.patient import Patient
 
 
 class PatientSchema(BaseModel):
-    """ Define como um novo paciente a ser inserido deve ser representado
-    """
+    """ Defines how a new patient to be inserted should be represented """
     age: int = 20
     sex: int = 1
     cp: int = 1
@@ -24,7 +23,8 @@ class PatientSchema(BaseModel):
 
 
 class PatientViewSchema(BaseModel):
-    """Define como um paciente será retornado"""
+    """Defines how a patient will be returned"""
+    id: int = 1
     age: int = 20
     sex: int = 1
     cp: int = 1
@@ -79,8 +79,8 @@ def show_patient(patient: Patient):
 
 # Apresenta uma lista de pacientes
 def show_all_patients(patients: List[Patient]):
-    """ Retorna uma representação do paciente seguindo o schema definido em
-        PacienteViewSchema.
+    """ Returns a representation of the patient following the schema defined in
+        PatientViewSchema.
     """
     result = []
     for patient in patients:

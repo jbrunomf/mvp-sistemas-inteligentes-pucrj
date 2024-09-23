@@ -148,30 +148,30 @@ def predict(form: PatientSchema):
 
 # Métodos baseados em nome
 # Rota de busca de paciente por nome
-# @app.get('/patient', tags=[patient_tag],
-#          responses={"200": PatientViewSchema, "404": ErrorSchema})
-# def get_patient(query: PatientSearchSchema):
-#     """get patient by id from database
-#
-#     Args:
-#         patient id (int)
-#
-#     Returns:
-#         dict: patient instance
-#     """
-#
-#     logger.debug(f"loading patient.. wait a moment #{query.id}")
-#     session = Session()
-#     patient = session.query(Patient).filter(Patient.id == query.id).first()
-#
-#     if not patient:
-#         error_msg = f"Patient {patient.id} not found. Try again."
-#         logger.warning(f"{error_msg}")
-#         return {"mesage": error_msg}, 404
-#     else:
-#         logger.debug(f"Patient found!: '{patient.id}'")
-#         # returns the representation of the patient
-#         return show_patient(patient), 200
+@app.get('/patientById', tags=[patient_tag],
+         responses={"200": PatientViewSchema, "404": ErrorSchema})
+def get_patient(query: PatientSearchSchema):
+    """get patient by id from database
+
+    Args:
+        patient id (int)
+
+    Returns:
+        dict: patient instance
+    """
+
+    logger.debug(f"loading patient.. wait a moment #{query.id}")
+    session = Session()
+    patient = session.query(Patient).filter(Patient.id == query.id).first()
+
+    if not patient:
+        error_msg = f"Patient {patient.id} not found. Try again."
+        logger.warning(f"{error_msg}")
+        return {"mesage": error_msg}, 404
+    else:
+        logger.debug(f"Patient found!: '{patient.id}'")
+        # returns the representation of the patient
+        return show_patient(patient), 200
 
 
 # Rota de remoção de paciente por nome

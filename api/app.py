@@ -1,6 +1,7 @@
+import pickle
+import pandas as pd
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
-
 from api.model.model import Model
 from api.model.patient import Patient
 from api.model.pipeline import Pipeline
@@ -10,11 +11,12 @@ from api.schemas.patient_schema import PatientSchema, show_patient, show_all_pat
     PatientSearchSchema, ListPacientesSchema
 from api.model import *
 from api.logger import logger
-
 from flask_cors import CORS
 
+from api.tests.model_test import ModelAccuracyAssertion
+
 # Instanciando o objeto OpenAPI
-info = Info(title="Minha API", version="1.0.0")
+info = Info(title="Heart Disease Prediction", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 
@@ -60,6 +62,13 @@ def get_all():
 @app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
+    with open('MachineLearning/model/classificador.pkl', 'rb') as file:
+        classifer = pickle.load(file)
+    X_test_file = pd.read_csv('api/tests/x_test_heart_disease.csv')
+    y_test_file = pd.read_csv('api/tests/y_test_heart_disease.csv')
+
+    assertion = ModelAccuracyAssertion(classifer, X_test_file, y_test_file, threshold=0.7)
+    assertion.assert_accuracy()
     """Adds a new patient to the database
     Returns a representation of patients and associated diagnoses.
 
@@ -146,8 +155,7 @@ def predict(form: PatientSchema):
         return {"message": error_msg}, 400
 
 
-# Métodos baseados em nome
-# Rota de busca de paciente por nome
+# Rota de busca de paciente por Id
 @app.get('/patientById', tags=[patient_tag],
          responses={"200": PatientViewSchema, "404": ErrorSchema})
 def get_patient(query: PatientSearchSchema):

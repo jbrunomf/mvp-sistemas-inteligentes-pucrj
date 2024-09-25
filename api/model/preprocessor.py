@@ -2,7 +2,6 @@ from sklearn.model_selection import train_test_split
 import pickle
 import numpy as np
 
-from api.model.patient import Patient
 from api.schemas.patient_schema import PatientSchema
 
 
@@ -13,12 +12,6 @@ class PreProcessor:
 
     def split_train_test(self, dataset, test_percentage, random_seed=7):
         """ Handles all preprocessing steps. """
-
-        # Clean data and eliminate outliers
-        dataset = self.clean_data(dataset)
-
-        # Feature selection
-        dataset = self.select_features(dataset)
 
         # Split into train and test
         X_train, X_test, Y_train, Y_test = self.__prepare_holdout(dataset, test_percentage, random_seed)

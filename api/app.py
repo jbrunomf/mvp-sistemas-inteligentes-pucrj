@@ -62,13 +62,16 @@ def get_all():
 @app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
-    with open('MachineLearning/model/classificador.pkl', 'rb') as file:
+
+    """Teste de acurácia do modelo"""
+    with open('MachineLearning/pipelines/pipeline.pkl', 'rb') as file:
         classifer = pickle.load(file)
     X_test_file = pd.read_csv('api/tests/x_test_heart_disease.csv')
     y_test_file = pd.read_csv('api/tests/y_test_heart_disease.csv')
 
     assertion = ModelAccuracyAssertion(classifer, X_test_file, y_test_file, threshold=0.7)
     assertion.assert_accuracy()
+
     """Adds a new patient to the database
     Returns a representation of patients and associated diagnoses.
 
@@ -112,11 +115,10 @@ def predict(form: PatientSchema):
     X_input = PreProcessor.prepare_from_form(form)
     # Carregando modelo
     model_path = 'MachineLearning/pipelines/pipeline.pkl'
-    # modelo = Model.carrega_modelo(ml_path)
+    # modelo = Model.load_model(model_path)
     modelo = Pipeline.load(model_path)
     # Realizando a predição
     outcome = int(Model.predict(modelo, X_input)[0])
-
     patient = Patient(
         age=age,
         sex=sex,
@@ -130,10 +132,11 @@ def predict(form: PatientSchema):
         oldpeak=oldpeak,
         slope=slope,
         ca=ca,
-        outcome=outcome,
-        thal=thal
+        thal=thal,
+        outcome=outcome
     )
-    logger.debug(f"Adding patient: '{patient}'")
+
+    #logger.debug(f"Adding patient: '{patient}'")
 
     try:
         # Creating connection to the database

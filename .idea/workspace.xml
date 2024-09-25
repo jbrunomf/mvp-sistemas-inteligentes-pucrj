@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="Update ML pipeline and preprocessing logic&#10;&#10;Refactored ML pipeline and updated preprocessing methods. Introduced a new scaler in PreProcessor class and expanded pre_processing methods for PatientSchema. Updated the Jupyter notebook with KNN model for hyperparameter tuning, replacing outdated SVM, and fixed related errors.">
+    <list default="true" id="78424b4d-0216-4e09-97ef-7c38edaec7b1" name="Changes" comment="Refactor ML pipeline and preprocessing logic&#10;&#10;Updated preprocessing steps in `PreProcessor` class and removed outdated feature selection methods. Deleted unnecessary files and updated the Jupyter notebook to use the KNN model instead of SVM for hyperparameter tuning and evaluation.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MachineLearning/model/classificador.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/MachineLearning/model/classificador.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MachineLearning/pipelines/pipeline.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/MachineLearning/pipelines/pipeline.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MachineLearning/scaler/scaler.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/MachineLearning/scaler/scaler.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/model/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/model/preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/model/preprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/y_test_heart_disease.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/y_test_heart_disease.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notebook/.ipynb_checkpoints/MVP-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/.ipynb_checkpoints/MVP-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notebook/MVP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/MVP.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/classificador.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/pipeline.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/scaler.pkl" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,6 +168,7 @@
       <workItem from="1727142871704" duration="1000" />
       <workItem from="1727218768317" duration="3814000" />
       <workItem from="1727223180993" duration="1708000" />
+      <workItem from="1727225267273" duration="766000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial MVP code for heart disease prediction&#10;&#10;This commit introduces the initial version of the MVP for heart disease prediction. The notebook includes data loading, preprocessing, model training, and validation using several machine learning algorithms.">
       <option name="closed" value="true" />
@@ -274,7 +266,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727142852608</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Refactor ML pipeline and preprocessing logic&#10;&#10;Updated preprocessing steps in `PreProcessor` class and removed outdated feature selection methods. Deleted unnecessary files and updated the Jupyter notebook to use the KNN model instead of SVM for hyperparameter tuning and evaluation.">
+      <option name="closed" value="true" />
+      <created>1727225330381</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727225330381</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +293,8 @@
     <MESSAGE value="Align patient schema and re-enable patient retrieval&#10;&#10;Updated docstrings in patient_schema.py to maintain consistent language. Re-enabled and modified the get_patient function in app.py to fetch patients by ID instead of name, clarifying the API endpoint." />
     <MESSAGE value="Update ML model and pipeline, fix notebook errors&#10;&#10;Replaced SVM with KNN in the Jupyter notebook for hyperparameter optimization, including an expanded 'n_neighbors' range and better model naming conventions. Deleted outdated pipeline file and added a new one to reflect these changes. Also updated `.idea/workspace.xml` with new task summaries and commit messages for project consistency." />
     <MESSAGE value="Update ML pipeline and preprocessing logic&#10;&#10;Refactored ML pipeline and updated preprocessing methods. Introduced a new scaler in PreProcessor class and expanded pre_processing methods for PatientSchema. Updated the Jupyter notebook with KNN model for hyperparameter tuning, replacing outdated SVM, and fixed related errors." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update ML pipeline and preprocessing logic&#10;&#10;Refactored ML pipeline and updated preprocessing methods. Introduced a new scaler in PreProcessor class and expanded pre_processing methods for PatientSchema. Updated the Jupyter notebook with KNN model for hyperparameter tuning, replacing outdated SVM, and fixed related errors." />
+    <MESSAGE value="Refactor ML pipeline and preprocessing logic&#10;&#10;Updated preprocessing steps in `PreProcessor` class and removed outdated feature selection methods. Deleted unnecessary files and updated the Jupyter notebook to use the KNN model instead of SVM for hyperparameter tuning and evaluation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor ML pipeline and preprocessing logic&#10;&#10;Updated preprocessing steps in `PreProcessor` class and removed outdated feature selection methods. Deleted unnecessary files and updated the Jupyter notebook to use the KNN model instead of SVM for hyperparameter tuning and evaluation." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mvp_sistemas_inteligentes$patient_schema.coverage" NAME="patient_schema Coverage Results" MODIFIED="1726532831952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api/schemas" />

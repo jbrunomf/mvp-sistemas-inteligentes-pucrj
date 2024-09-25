@@ -14,6 +14,8 @@ from api.logger import logger
 from flask_cors import CORS
 
 from api.tests.model_test import ModelAccuracyAssertion
+import warnings
+warnings.filterwarnings("ignore")
 
 # Instanciando o objeto OpenAPI
 info = Info(title="Heart Disease Prediction", version="1.0.0")

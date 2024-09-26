@@ -17,17 +17,14 @@ from api.tests.model_test import ModelAccuracyAssertion
 import warnings
 warnings.filterwarnings("ignore")
 
-# Instanciando o objeto OpenAPI
 info = Info(title="Heart Disease Prediction", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 
-# Definindo tags para agrupamento das rotas
 home_tag = Tag(name="Doc", description="Swagger, Redoc or RapiDoc")
 patient_tag = Tag(name="Patient", description="Create, Read Data from patients")
 
 
-# Rota home
 @app.get('/', tags=[home_tag])
 def home():
     """Redirects to /openapi, a screen that allows choosing the style of documentation.
@@ -35,7 +32,6 @@ def home():
     return redirect('/openapi')
 
 
-# Rota de listagem de pacientes
 @app.get('/patient', tags=[patient_tag],
          responses={"200": ListPacientesSchema, "404": ErrorSchema})
 def get_all():
@@ -50,17 +46,16 @@ def get_all():
     # Creating connection to the database
     session = Session()
     # Fetching all patients
-    pacientes = session.query(Patient).all()
+    patients = session.query(Patient).all()
 
-    if not pacientes:
+    if not patients:
         # If there are no patients
         return {"patients": []}, 200
     else:
-        logger.debug(f"%d patient(s) found" % len(pacientes))
-        return show_all_patients(pacientes), 200
+        logger.debug(f"%d patient(s) found" % len(patients))
+        return show_all_patients(patients), 200
 
 
-# add new patient route
 @app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
@@ -153,15 +148,13 @@ def predict(form: PatientSchema):
         # logger.debug(f"Added patient with name: '{paciente.name}'")
         return show_patient(patient), 200
 
-    # In case of any error during addition
     except Exception as e:
         error_msg = "Could not save the patient"
         logger.warning(f"Error adding patient '{patient}', {e}")
         return {"message": error_msg}, 400
 
 
-# Rota de busca de paciente por Id
-@app.get('/patientById', tags=[patient_tag],
+@app.get('/patient', tags=[patient_tag],
          responses={"200": PatientViewSchema, "404": ErrorSchema})
 def get_patient(query: PatientSearchSchema):
     """get patient by id from database
@@ -183,11 +176,9 @@ def get_patient(query: PatientSearchSchema):
         return {"mesage": error_msg}, 404
     else:
         logger.debug(f"Patient found!: '{patient.id}'")
-        # returns the representation of the patient
         return show_patient(patient), 200
 
 
-# Rota de remoção de paciente por nome
 @app.delete('/patient', tags=[patient_tag],
             responses={"200": PatientViewSchema, "404": ErrorSchema})
 def delete_patient(query: PatientSearchSchema):

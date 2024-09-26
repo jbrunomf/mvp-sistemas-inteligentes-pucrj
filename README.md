@@ -1,14 +1,14 @@
 # Heart Disease Prediction
 
-Este projeto é uma aplicação Flask que utiliza várias bibliotecas e frameworks para realizar diversas tarefas. O projeto
-está escrito em Python 3.10.11.
+Este projeto é uma aplicação Flask que utiliza bibliotecas que auxiliam no desenvolvimento de aplicações voltadas para ML,
+tais como ScikitLearn, numpy, matplotlib e pandas para realizar a predição com base nos dados informados
+se uma pessoa tem chance de portar problemas cardíacos.
 
 ## Objetivo
 
 O objetivo é classificar os pacientes em duas categorias  
-1. O paciente pode portar/desenvolver doença cardiaca.
-2. Não há indícios de que o paciente tenha/possa ter doença cardiaca.
-3. Os dados inputados são persistidos em uma base de dados SQLite.
+1. O paciente pode portar doença cardiaca.
+2. Não há indícios de que o paciente possua ter doença cardiaca.
 
 ## Bibliotecas utilizadas
 
@@ -18,8 +18,6 @@ O objetivo é classificar os pacientes em duas categorias
 - **Matplotlib**: Biblioteca para criação de gráficos.
 - **NumPy**: Biblioteca para computação numérica.
 - **Pandas**: Biblioteca para manipulação e análise de dados.
-- **Pillow**: Biblioteca para processamento de imagens.
-- **Requests**: Biblioteca para fazer requisições HTTP.
 - **Scikit-learn**: Biblioteca para machine learning.
 
 ## Instalação

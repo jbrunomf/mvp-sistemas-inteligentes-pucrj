@@ -56,11 +56,51 @@ def get_all():
         return show_all_patients(patients), 200
 
 
+@app.get('/patient/id', tags=[patient_tag],
+         responses={"200": PatientViewSchema, "404": ErrorSchema})
+def get_patient(query: PatientSearchSchema):
+    """get patient by id from database
+
+    Args:
+        patient id (int)
+
+    Returns:
+        dict: patient instance
+    """
+
+    logger.debug(f"loading patient.. wait a moment #{query.id}")
+    session = Session()
+    patient = session.query(Patient).filter(Patient.id == query.id).first()
+
+    if not patient:
+        error_msg = f"Patient {patient.id} not found. Try again."
+        logger.warning(f"{error_msg}")
+        return {"mesage": error_msg}, 404
+    else:
+        logger.debug(f"Patient found!: '{patient.id}'")
+        return show_patient(patient), 200
+
+
 @app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
+    """
+    Predicts and adds a new patient to the database.
+    
+    This function:
+    1. Loads a pre-trained machine learning model from a serialized pickle file.
+    2. Validates the model's accuracy with existing test data.
+    3. Extracts necessary patient information from the given form.
+    4. Prepares the patient data for model input.
+    5. Uses the model to predict the outcome for the new patient.
+    6. Adds the new patient and their diagnosis to the database.
+    
+    Args:
+        form (PatientSchema): Form containing patient information.
 
-    """Teste de acurácia do modelo"""
+    Returns:
+        tuple: A tuple containing a dictionary representation of the patient and the HTTP status code.
+    """
     with open('MachineLearning/pipelines/pipeline.pkl', 'rb') as file:
         classifer = pickle.load(file)
     X_test_file = pd.read_csv('api/tests/x_test_heart_disease.csv')
@@ -152,31 +192,6 @@ def predict(form: PatientSchema):
         error_msg = "Could not save the patient"
         logger.warning(f"Error adding patient '{patient}', {e}")
         return {"message": error_msg}, 400
-
-
-@app.get('/patient', tags=[patient_tag],
-         responses={"200": PatientViewSchema, "404": ErrorSchema})
-def get_patient(query: PatientSearchSchema):
-    """get patient by id from database
-
-    Args:
-        patient id (int)
-
-    Returns:
-        dict: patient instance
-    """
-
-    logger.debug(f"loading patient.. wait a moment #{query.id}")
-    session = Session()
-    patient = session.query(Patient).filter(Patient.id == query.id).first()
-
-    if not patient:
-        error_msg = f"Patient {patient.id} not found. Try again."
-        logger.warning(f"{error_msg}")
-        return {"mesage": error_msg}, 404
-    else:
-        logger.debug(f"Patient found!: '{patient.id}'")
-        return show_patient(patient), 200
 
 
 @app.delete('/patient', tags=[patient_tag],

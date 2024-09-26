@@ -17,17 +17,14 @@ from api.tests.model_test import ModelAccuracyAssertion
 import warnings
 warnings.filterwarnings("ignore")
 
-# Instanciando o objeto OpenAPI
 info = Info(title="Heart Disease Prediction", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 
-# Definindo tags para agrupamento das rotas
 home_tag = Tag(name="Doc", description="Swagger, Redoc or RapiDoc")
 patient_tag = Tag(name="Patient", description="Create, Read Data from patients")
 
 
-# Rota home
 @app.get('/', tags=[home_tag])
 def home():
     """Redirects to /openapi, a screen that allows choosing the style of documentation.
@@ -35,7 +32,6 @@ def home():
     return redirect('/openapi')
 
 
-# Rota de listagem de pacientes
 @app.get('/patient', tags=[patient_tag],
          responses={"200": ListPacientesSchema, "404": ErrorSchema})
 def get_all():
@@ -50,22 +46,61 @@ def get_all():
     # Creating connection to the database
     session = Session()
     # Fetching all patients
-    pacientes = session.query(Patient).all()
+    patients = session.query(Patient).all()
 
-    if not pacientes:
+    if not patients:
         # If there are no patients
         return {"patients": []}, 200
     else:
-        logger.debug(f"%d patient(s) found" % len(pacientes))
-        return show_all_patients(pacientes), 200
+        logger.debug(f"%d patient(s) found" % len(patients))
+        return show_all_patients(patients), 200
 
 
-# add new patient route
+@app.get('/patient/id', tags=[patient_tag],
+         responses={"200": PatientViewSchema, "404": ErrorSchema})
+def get_patient(query: PatientSearchSchema):
+    """get patient by id from database
+
+    Args:
+        patient id (int)
+
+    Returns:
+        dict: patient instance
+    """
+
+    logger.debug(f"loading patient.. wait a moment #{query.id}")
+    session = Session()
+    patient = session.query(Patient).filter(Patient.id == query.id).first()
+
+    if not patient:
+        error_msg = f"Patient {patient.id} not found. Try again."
+        logger.warning(f"{error_msg}")
+        return {"mesage": error_msg}, 404
+    else:
+        logger.debug(f"Patient found!: '{patient.id}'")
+        return show_patient(patient), 200
+
+
 @app.post('/patient', tags=[patient_tag],
           responses={"200": PatientSchema, "400": ErrorSchema, "409": ErrorSchema})
 def predict(form: PatientSchema):
+    """
+    Predicts and adds a new patient to the database.
+    
+    This function:
+    1. Loads a pre-trained machine learning model from a serialized pickle file.
+    2. Validates the model's accuracy with existing test data.
+    3. Extracts necessary patient information from the given form.
+    4. Prepares the patient data for model input.
+    5. Uses the model to predict the outcome for the new patient.
+    6. Adds the new patient and their diagnosis to the database.
+    
+    Args:
+        form (PatientSchema): Form containing patient information.
 
-    """Teste de acurácia do modelo"""
+    Returns:
+        tuple: A tuple containing a dictionary representation of the patient and the HTTP status code.
+    """
     with open('MachineLearning/pipelines/pipeline.pkl', 'rb') as file:
         classifer = pickle.load(file)
     X_test_file = pd.read_csv('api/tests/x_test_heart_disease.csv')
@@ -153,41 +188,12 @@ def predict(form: PatientSchema):
         # logger.debug(f"Added patient with name: '{paciente.name}'")
         return show_patient(patient), 200
 
-    # In case of any error during addition
     except Exception as e:
         error_msg = "Could not save the patient"
         logger.warning(f"Error adding patient '{patient}', {e}")
         return {"message": error_msg}, 400
 
 
-# Rota de busca de paciente por Id
-@app.get('/patientById', tags=[patient_tag],
-         responses={"200": PatientViewSchema, "404": ErrorSchema})
-def get_patient(query: PatientSearchSchema):
-    """get patient by id from database
-
-    Args:
-        patient id (int)
-
-    Returns:
-        dict: patient instance
-    """
-
-    logger.debug(f"loading patient.. wait a moment #{query.id}")
-    session = Session()
-    patient = session.query(Patient).filter(Patient.id == query.id).first()
-
-    if not patient:
-        error_msg = f"Patient {patient.id} not found. Try again."
-        logger.warning(f"{error_msg}")
-        return {"mesage": error_msg}, 404
-    else:
-        logger.debug(f"Patient found!: '{patient.id}'")
-        # returns the representation of the patient
-        return show_patient(patient), 200
-
-
-# Rota de remoção de paciente por nome
 @app.delete('/patient', tags=[patient_tag],
             responses={"200": PatientViewSchema, "404": ErrorSchema})
 def delete_patient(query: PatientSearchSchema):
